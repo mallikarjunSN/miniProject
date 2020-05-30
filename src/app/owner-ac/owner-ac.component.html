@@ -1,0 +1,207 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3 col-sm-3">
+            <mat-card style="padding-top: 0px;padding-bottom: 0px;">
+                <mat-card-title class="heading">Settings</mat-card-title>
+                <mat-card-content>
+                    <mat-list class="settings">
+                        <!-- <mat-list-item><button routerLink="/addprop">Add New</button></mat-list-item> -->
+                        <mat-list-item><button (click)="addPropflag=!addPropflag" id="addprop">Add New <i *ngIf="addPropflag" class="fas fa-window-close"></i></button></mat-list-item>
+                        <mat-list-item><button (click)="deleteFlag=!deleteFlag">Delete existing <i *ngIf="deleteFlag" class="fa fa-window-close"></i></button></mat-list-item>
+                        <mat-list-item><button (click)="editFlag=!editFlag">Edit Property Info <i *ngIf="editFlag" class="fa fa-window-close"></i></button></mat-list-item>
+                        <mat-list-item><button (click)="historyFlag=!historyFlag">Renting History <i *ngIf="historyFlag" class="fa fa-window-close"></i></button></mat-list-item>
+                        <hr>
+                        <!-- <mat-list-item><button>dsgsv</button></mat-list-item> -->
+                        <mat-list-item><button>My account Info</button></mat-list-item>
+                        <mat-list-item><a href="">logout</a> </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+
+        </div>
+        <div class="col-lg-9 col-sm-9">
+            <div class="row">
+                <div class="col-lg-12">
+                    <mat-card class="prop-menu">
+                        <mat-card-content>
+                            <div *ngIf="user.email==null">
+                                <h2 class="heading">Please Complete and verify Your Profile First <a (click)="profileFlag=!profileFlag">click here</a></h2>
+                                <div *ngIf="profileFlag">
+                                    <mat-card>
+                                        <mat-card-content class="complete">
+                                            <form (submit)="complete_profile(proform)" #proform="ngForm">
+                                                <mat-form-field>
+                                                    <mat-label>email address</mat-label>
+                                                    <input matInput type="email" name="email" ngModel required #email="ngModel">
+                                                    <mat-error *ngIf="email.touched && email.invalid">Enter proper email address</mat-error>
+                                                </mat-form-field>
+                                                <mat-form-field>
+                                                    <mat-label>Address</mat-label>
+                                                    <input matInput type="text" name="address" required ngModel #address="ngModel">
+                                                    <mat-error *ngIf="address.touched && address.invalid">Enter proper address</mat-error>
+                                                </mat-form-field>
+                                                <mat-form-field>
+                                                    <mat-label>Aadhar no</mat-label>
+                                                    <input matInput type="text" name="aadhar" minlength="16" maxlength="16" required ngModel #aadhar="ngModel">
+                                                    <!-- <mat-error *ngIf="email.touched && email.invalid">Enter proper email address</mat-error> -->
+                                                </mat-form-field>
+                                                <mat-form-field>
+                                                    <mat-label>phone no2 (optional)</mat-label>
+                                                    <input matInput type="text" name="phone2" ngModel #phone2="ngModel">
+                                                    <!-- <mat-error *ngIf="email.touched && email.invalid">Enter proper email address</mat-error> -->
+                                                </mat-form-field>
+                                                <button style="margin: 5px;" class="btn btn-primary" *ngIf="proform.valid " type="submit">SUBMIT</button>
+                                            </form>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </div>
+                                <hr>
+                            </div>
+                            <div *ngIf="deleteFlag" >
+                                <h2 class="heading">Delete Existing Property</h2>
+                                <i (click)="deleteFlag=!deleteFlag" class="fa fa-window-close"></i>
+                                <mat-form-field>
+                                    <mat-label>Select the house names to be deleted</mat-label>
+                                    <mat-select multiple ngModel #deletes="ngModel">
+                                        <mat-option *ngFor="let i of properties" [value]=i.houseno> {{i.houseno}},{{i.name}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <button mat-raised-button [disabled]="deletes.value==''" (click)="deleteSelected(deletes)" class="btn btn-danger">Delete Selected</button>   
+                                <hr>
+                            </div>
+                            <div *ngIf="editFlag">
+                                <h2 class="heading">Edit Property Info</h2>
+                                <i (click)="editFlag=!editFlag" class="fa fa-window-close"></i>
+                                <mat-form-field>
+                                    <mat-label>Select the house name to edit its details</mat-label>
+                                    <mat-select ngModel #edits="ngModel">
+                                        <mat-option *ngFor="let i of properties" [value]=i> {{i.houseno}},{{i.name}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <button mat-raised-button [disabled]="edits.value==''" (click)="editProp(edits)" class="btn btn-warning">Edit Selected</button>   
+                                <hr>
+                            </div>
+                            <div *ngIf="historyFlag">
+                                <i class="fa fa-window-close"></i>
+                                <h2 class="heading">Renting history</h2>
+                                <table class="hist-table">
+                                    <!-- <colgroup span="2"></colgroup>
+                                    <colgroup span="1"></colgroup>
+                                    <colgroup span="2"></colgroup> -->
+                                    <tr>
+                                        <th colspan="2">Property</th>
+                                        <th colspan="1" rowspan="2">Renter name</th>
+                                        <th colspan="2">Duration</th>
+                                    </tr>
+                                    <tr>
+                                        <th>House No</th>
+                                        <th>House Name</th>
+                                        <th>From</th>
+                                        <th>to</th>
+                                    </tr>
+                                    <tr *ngFor="let i of history">
+                                        <td>{{i.houseno}}</td>
+                                        <td>{{i.name}}</td>
+                                        <td>{{i.renter_name}}</td>
+                                        <td>{{i.rent_start_date | date:'dd-MMM-yyyy'}}</td>
+                                        <td>{{i.rent_end_date | date:'dd-MMM-yyyy'}}</td>
+                                    </tr>
+                                </table>
+                                <hr>
+                            </div>
+                            <div *ngIf="addPropflag" >
+                                <i (click)="addPropflag=!addPropflag" class="fa fa-window-close"></i>
+                                <app-add-prop></app-add-prop>
+                                <hr>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                    <mat-card>
+                        <mat-card-title class="heading">
+                            <h2 class="heading">Notifications</h2>
+                        </mat-card-title>
+                        <mat-card-content>
+                            <mat-list>
+                                <mat-list-item *ngFor="let i of notifications">
+                                    <span class="new-icon">new</span>
+                                    <div *ngIf="i.status=='NEW'">
+                                        <span class="NEW">{{i.rentername}} has sent a request for houseno:{{i.houseno}} on {{i.date | date: 'dd/MM/yyyy' }} {{i.time}}</span>
+                                        <button mat-raised-button class="btn btn-primary" style="padding-top: 5px;" (click)="acceptRequest(i)">Accept Request </button>
+                                        <button mat-raised-button class="btn btn-danger" style="padding-top: 5px;" (click)="rejectRequest(i)">Reject Request </button>
+                                    </div>
+                                    <div *ngIf="i.status=='CONFIRM'">
+                                        <span class="NEW">{{i.rentername}} has sent confirmed renting by making payment for houseno:{{i.houseno}} and will arrive on {{i.arrival_date | date: 'dd/MM/yyyy' }}</span>
+                                        <button mat-raised-button class="btn btn-warning" style="padding-top: 5px;" (click)="clearRequest(i)">Clear </button>
+                                    </div>
+
+                                    <div *ngIf="i.status=='DECLINE'">
+                                        <span class="NEW">{{i.rentername}} has sent declined renting for houseno:{{i.houseno}} <br> reason : {{i.reason}}</span>
+                                        <br>
+                                        <button mat-raised-button class="btn btn-warning" style="padding-top: 5px;" (click)="clearRequest(i)">Clear </button>
+                                    </div>
+                                    
+                                </mat-list-item>
+                                <hr>
+                            </mat-list>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                    <mat-card>
+                        <mat-card-content>
+                            <div class="row bar">
+                                <div class="col-lg-4">
+                                    <h2 class="heading" id="my-props">My Properties</h2>
+                                </div>
+                                <div class="col-lg-4">
+                                    
+                                    <mat-form-field style="width: 90%;">
+                                        <mat-label style="padding-bottom: 0px;"><i class="fa fa-user"></i> Sort By</mat-label>
+                                            <mat-select name="usertype"  ngModel  #usertype="ngModel">
+                                                <mat-option (click)="sort('houseno')" value="houseno">House No</mat-option>
+                                                <mat-option (click)="sort('name')" value="name">House Name</mat-option>
+                                                <mat-option (click)="sort('bhk')" value="bhk">BHK</mat-option>
+                                            </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4">
+                                    <button mat-raised-button class="asc-btn" (click)="reverse()"><span> ASC-DESC <i class="fa fa-sort"></i> </span></button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table class="prop-table">
+                                        <th>Photo</th>
+                                        <th>House No</th>
+                                        <th>House Name</th>
+                                        <th>BHK</th>
+                                        <th>Address</th>
+                                        <th>Suitable</th>
+                                        <th>More</th>
+        
+                                        <tr *ngFor="let i of properties;let j of address">
+                                            <td style="width:200px;"> <img class="prop-img" src="../../assets/house/9148269103/46/pic2.jpg" alt=""> </td>
+                                            <td >{{i.houseno}}</td>
+                                            <td >{{i.name}}</td>
+                                            <td >{{i.bhk}}</td>
+                                            <td>street:{{j.street}} <br> city:{{j.city}} <br> landmark:{{j.landmark}} <br> city:{{j.city}}</td>
+                                            <td >{{i.suitable}}</td>
+                                            <td >{{i.more}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>      
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

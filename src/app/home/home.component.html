@@ -1,0 +1,88 @@
+<div class="container-fluid" style="border-style: none;margin-top: 0px;">
+    
+    <div id="top" class="row" style="margin-top: 0px;">
+        <div class="col-lg-12">
+            <div class="offer">
+                <a (click)="change(1)" class="fa fa-button left">&#10094;</a>
+                <img [src]="poster" alt="offers-image">
+                <a  (click)="change(2)" class="fa fa-button right">&#10095;</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-2">
+            <span style="text-align: center;" *ngFor="let i of [0,1,2,3]">
+                <span *ngIf="i==current" class="current-slide">{{i+1}}</span> 
+                <span *ngIf="i!=current" class="slide-no">{{i+1}}</span> 
+            </span>
+        </div>
+        <div class="col-md-5"></div>
+    </div>
+    <div style="background-color: rgba(0, 0, 0, 0.7);" class="row category">
+        <div class="col-lg-6">
+            <div>
+                <h1 class="headings">Choose based on your need</h1>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <mat-card (click)="navigate('family')">
+                <mat-card-header class="cat">Family</mat-card-header>
+                <a><img src="../../assets/category/family.jpg" alt="Family"></a>
+            </mat-card><br>
+            <mat-card (click)="navigate('student')">
+                <mat-card-header class="cat">Education</mat-card-header>
+                <a ><img src="../../assets/category/graduation.jpg" alt="Education"></a>
+            </mat-card>
+        </div>
+
+        <div class="col-lg-3">
+            <mat-card (click)="navigate('job seeker')">
+                <mat-card-header class="cat">Professional</mat-card-header>
+                <a ><img src="../../assets/category/businessman.jpg" alt="Professional"></a>
+            </mat-card><br>
+            <mat-card (click)="navigate('short term')">
+                <mat-card-header class="cat">Short term Rents</mat-card-header>
+                <a><img src="../../assets/category/travel.jpg" alt="short-term"></a>
+            </mat-card>
+        </div>
+
+    </div>
+
+    <div style="background-color: rgba(0, 0, 255, 0.5);" class="row cities">
+        <div class="col-lg-3">
+            <h3 class="city">Bengaluru</h3>
+            <mat-card (click)="navigate('bengaluru')">
+                <mat-card-content>
+                    <img mat-card-image src="../../assets/cities/bengaluru.jpg" alt="vidhana-soudha">
+                </mat-card-content>
+            </mat-card>
+            <h3 class="city" >Chennai</h3>
+                <mat-card (click)="navigate('chennai')">                <mat-card-content>
+                    <img mat-card-image src="../../assets/cities/chennai.jpg" alt="vidhana-soudha">
+                </mat-card-content>
+            </mat-card>
+
+        </div>
+    
+        <div class="col-lg-3">
+            <h3 class="city" >Mumbai</h3>
+            <mat-card (click)="navigate('mumbai')">
+                    <mat-card-content>
+                        <img mat-card-image src="../../assets/cities/mumbai.jpg" alt="vidhana-soudha">
+                    </mat-card-content>
+            </mat-card>
+            <h3 class="city" >Lucknow</h3>
+            <mat-card (click)="navigate('lucknow')">
+                <mat-card-content>
+                    <img mat-card-image src="../../assets/cities/lucknow.jpg" alt="vidhana-soudha">
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-lg-6">
+            <h1 class="headings">Convenient Rents now at your City</h1>
+        </div>
+    </div>
+
+    <button (click)="scroll()">to top</button>
+</div>

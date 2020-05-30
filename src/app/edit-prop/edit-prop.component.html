@@ -1,0 +1,98 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">                
+            <mat-card>
+                <!-- <span (click)="addPropFlag=!addPropFlag">x<i class="fa fa-close"></i></span> -->
+                <mat-card-title class="heading">Edit Prop <br> <span style="font-size: medium;">Please Edit the desired details of the property</span> </mat-card-title>
+                <mat-card-content>
+                    <form (submit)="submit(editForm)" #editForm="ngForm">
+                        <table>
+                            <tr>
+                                <td style="white-space:nowrap;">
+                                <!-- <mat-form-field> -->
+                                    <label for="housename">House Name</label><br>
+                                    <input type="text" placeholder="housename" [value]=prop.name name="name" ngModel required #name="ngModel">
+                                <!-- </mat-form-field> -->
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <td style="white-space:nowrap;">
+                                    <label for="houseno">House No.</label><br>
+                                    <input type="text" id="houseno" placeholder="houseno" [value]=prop.houseno name="houseno" ngModel required #houseno="ngModel">
+                                </td>
+                            </tr> -->
+                            <tr>
+                                <td style="white-space:nowrap;">
+                                    <label for="bhk">House Type</label><br>
+                                    <select name="bhk" class="form-control" [value]=prop.bhk ngModel required #housetype="ngModel">
+                                        <option value="1bhk">1BHK</option>
+                                        <option value="2bhk">2BHK</option>
+                                        <option value="3bhk">3BHK</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="white-space:nowrap;">
+                                    <label for="housename">Monthly Rent Amount</label><br>
+                                    <input type="text" placeholder="rent amt." name="rent_amt" [value]=prop.rent_amt ngModel required #rent_amt="ngModel">
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>
+                                    <label for="street">Street</label><br>
+                                    <input type="text" placeholder="street" name="street" [value]=prop.street ngModel required #street="ngModel">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="city">City</label><br>
+                                    <input type="text" placeholder="city" name="city" [value]=prop.city ngModel required #city="ngModel">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="state">State</label><br>
+                                    <input type="text" placeholder="state" name="state" [value]=prop.state ngModel required #state="ngModel">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="pincode">Pin code</label><br>
+                                    <input type="text" id="pin" name="pin" [value]=prop.pin maxlength="6" minlength="6" title="Six digit pincode" ngModel required #pincode="ngModel"><br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="landmark">Landmark</label><br>
+                                    <input type="text" placeholder="landmark" name="landmark" [value]=prop.landmark ngModel required #landmark="ngModel">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="white-space:nowrap;">
+                                <label for="suitable">Suitable For</label><br>
+                                    <select name="suitable" class="form-control" [value]=prop.suitable ngModel required #suitable="ngModel">
+                                        <option value="student">Student</option>
+                                        <option value="job seeker">Job seeker</option>
+                                        <option value="family">Family</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="more">More about the property</label><br>
+                                    <textarea placeholder="more info about the house" cols="30" rows="6" ngModel name="more" [value]=prop.more required #more="ngModel"></textarea>
+                                </td>
+                            </tr>
+                            
+                            <tr> 
+                                <td> <br><button class="btn btn-warning" type="reset">Clear</button>
+                                <button class="btn btn-primary" type="submit"> Save changes </button></td>
+                            </tr>
+                        </table>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

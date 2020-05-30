@@ -1,0 +1,96 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">                
+            <!-- <span (click)="addPropFlag=!addPropFlag">x<i class="fa fa-close"></i></span> -->
+            <h1 class="heading">Add New</h1>
+            <form (submit)="submit(propForm)" #propForm="ngForm">
+                <table>
+                    <tr>
+                        <td style="white-space:nowrap;">
+                            <label for="housename">House Name</label><br>
+                            <input type="text" placeholder="housename" name="housename" ngModel required #housename="ngModel">
+                        </td>
+                    </tr>
+        
+                    <tr>
+                        <td style="white-space:nowrap;">
+                            <label for="houseno">House No.</label><br>
+                            <input type="text" id="houseno" placeholder="houseno" name="houseno" ngModel required #houseno="ngModel">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="white-space:nowrap;">
+                            <label for="housetype">House Type</label><br>
+                            <select name="housetype" class="form-control" ngModel required #housetype="ngModel">
+                                <option value="1bhk">1BHK</option>
+                                <option value="2bhk">2BHK</option>
+                                <option value="2.5bhk">2.5BHK</option>
+                                <option value="3bhk">3BHK</option>
+                                <option value="3.5bhk">3.5BHK</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="white-space:nowrap;">
+                            <label for="housename">Monthly Rent Amount</label><br>
+                            <input type="number" placeholder="rent amt" name="rent_amt" ngModel required #rent_amt="ngModel">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label for="street">Street</label><br>
+                            <input type="text" placeholder="street" name="street" ngModel required #street="ngModel">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="city">City</label><br>
+                            <input type="text" placeholder="city" name="city" ngModel required #city="ngModel">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="state">State</label><br>
+                            <input type="text" placeholder="state" name="state" ngModel required #state="ngModel">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="pincode">Pin code</label><br>
+                            <input type="text" id="pincode" name="pincode" maxlength="6" minlength="6" title="Six digit pincode" ngModel required #pincode="ngModel"><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="landmark">Landmark</label><br>
+                            <input type="text" placeholder="landmark" name="landmark" ngModel required #landmark="ngModel">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="white-space:nowrap;">
+                        <label for="suitable">Suitable For</label><br>
+                            <select name="suitable" class="form-control" ngModel required #suitable="ngModel">
+                                <option value="student">Student</option>
+                                <option value="job seeker">Job seeker</option>
+                                <option value="family">Family</option>
+                                <option value="short_term">Short term</option>
+                                <option value="all">All</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="more">More about the property</label><br>
+                            <textarea placeholder="more info about the house" cols="30" rows="6" ngModel name="more" required #more="ngModel"></textarea>
+                        </td>
+                    </tr>
+                    <tr> 
+                        <td> <br><button class="btn btn-warning" type="reset">Clear</button>
+                                <button class="btn btn-primary" type="submit">    Add    </button></td>
+                        </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>

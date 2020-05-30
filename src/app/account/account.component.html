@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row">
+        <div style="padding: 0px;" class="col-lg-12">
+            <mat-card>
+                <mat-card-title class="heading">
+                    <h2 class="heading">Notifications</h2>
+                </mat-card-title>
+                <mat-card-content>
+                    <ul>
+                        <li *ngFor="let i of notifications">
+                            <span class="new-icon">new</span>
+                            <span style="font-weight: bold;"> Your Request for house with house-no : {{i.houseno}} and house-name : {{i.name}} has been {{i.status}}</span> 
+                            <button *ngIf="i.status=='ACCEPTED'" (click)="respond=!respond"  class="btn btn-info">Respond</button>
+                            <button *ngIf="i.status=='REJECTED'" (click)="clearRequest(i)"  class="btn btn-info">clear</button>
+                            <br>
+                            <div *ngIf="respond">
+
+                                <ul type="none">
+                                    <li class="action"><div class="row">
+                                        <div class="col-md-9">
+                                            <span style="font-size: small;"> choose this option if you have visited the room,liked it and you are ready to make advance payment for renting </span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button class="btn btn-primary" style="padding-top: 5px;" (click)="confirmRequest(i)">Confirm and <br> make advance payment</button>
+                                        </div>
+                                    </div>
+                                    </li>
+                                    <li class="action">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <span style="font-size: small;">choose this option if you have visited the room,and didn't like it and you don't want to rent the house</span>
+                                                <span>please mention the reason for declining the house here</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                    <textarea style="width: 100%;" cols="3" type="text" name="reason" required ngModel #reason="ngModel"></textarea>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button class="btn btn-danger" style="padding-top: 5px;" (click)="declineRequest(i,reason)">Decline </button>
+                                            </div>
+                                        </div>
+                                        
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <hr>
+                    </ul>
+                        
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

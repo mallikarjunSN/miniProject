@@ -1,0 +1,151 @@
+.offer>img{
+    height: 120%;
+    width: 100%;
+    orientation: landscape;
+
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 450px;
+    orientation: 180deg;
+    /* border-radius: 20px; */
+    animation:fade 2s 1;
+
+    /* animation: fade duration timing-function delay iteration-count direction fill-mode; */
+
+    image-rendering: pixelated;
+}
+
+@keyframes fade
+{
+  0%   {opacity:1}
+  33.333% { opacity: 0}
+  66.666% { opacity: 0}
+  100% { opacity: 1}
+}
+
+.slide-no{
+    border-color: black;
+    background-color: rgb(38, 192, 166);
+    color: white;
+    border-radius: 50%;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 4px;
+}
+.current-slide{
+    background-color: rgb(38, 192, 166);
+    color: black;
+    font-weight: bold;
+    border-radius: 50%;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 7px;
+    font-size: large;
+}
+
+a,img{
+    cursor: pointer;
+}
+
+.city{
+    text-align: center;
+    font-weight: bold;
+    color: white;
+}
+
+.city>img{
+    height: 70%;
+}
+
+.right,.left{
+    cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 5px;
+  border-style: none;
+  user-select: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: xx-large;
+}
+
+.right{
+    right: 0;
+  border-radius: 3px 0 0 3px;
+  margin-right: 15px;
+}
+
+.heading{
+    color: white;
+    font-size: large;
+}
+
+.headings{
+    text-align: center;
+    color: white;
+    font-size: 60px;
+}
+
+.category img{
+    height: 90%;
+    width: 90%;
+    margin:2px;
+    border-radius: 10px;
+}
+
+.category mat-card{
+    margin: 5%;
+    height: 240px;
+    width: 300px;
+}
+
+/* .category mat-card:hover{
+    height: 540px;
+    width: 600px;
+    position: absolute;
+} */
+
+
+.cities img{
+    height: 200px;
+    width: 200px;
+    margin:10%;
+    border-radius: 50%;
+}
+
+.cities mat-card{
+    margin: 5%;
+    background-color: rgb(172, 53, 32);
+    border-radius: 50%;
+    /* background-color: rgba(255, 255, 255,0); */
+    height: 300px;
+    width: 300px;
+}
+
+.cities mat-card-content{
+    margin: 5%;
+    border-radius: 50%;
+    background-color: rgb(231, 122, 83);
+
+    /* height: 300px;
+    width: 300px; */
+}
+
+.cat{
+    text-align: center;
+    /* margin: 5px; */
+    font-weight: bold;
+    color: coral;
+}
+
+.container-fluid{
+    padding: 0px;
+}

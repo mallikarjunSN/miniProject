@@ -1,0 +1,161 @@
+.navbar{
+    justify-content: space-between;
+    /* height: 20%; */
+}
+
+a{
+    /* margin-top: 10px; */
+    padding-right: 1rem;
+}
+
+.sideMenu a,i {
+    font-size: 20px;
+    color: black;
+    visibility: visible;
+}
+
+.navbar a,i{
+    color: white;
+}
+
+mat-expansion-panel-header{
+    font-size: 25px;
+} 
+.container-fluid{
+    height: 100%;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+.example-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #eee;
+  }
+
+  mat-sidenav-container{
+      height: 100%;
+      margin-bottom: 0px;
+      padding-bottom: 0px;
+  }
+
+  .footer{
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+
+  }
+  mat-sidenav{
+      height: auto;
+  }
+  /* mat-sidenav{
+      padding: 16px;
+
+  } */
+
+  mat-toolbar{
+      background-color: coral;
+  }
+
+  mat-sidenav-content{
+      height: 100%;
+  }
+
+
+  mat-sidenav{
+      background-color: whitesmoke;
+      width: 250px;
+      text-align: center;
+
+    }
+
+  
+.cont{
+    border-style: dotted;
+}
+
+
+.title{
+    padding-left: 20px;
+    font-size: 40px;
+    font-weight: bold;
+    color: white;  
+    margin-top: 4%;
+}
+
+.title:link { 
+    text-decoration: none; 
+} 
+
+.title:hover { 
+    text-decoration: none; 
+} 
+
+/* background-color: rgb(37, 17, 119); */
+
+.side-title{
+    /* color: black; */
+    background-color: rgb(38, 192, 166);
+    width: 100%;
+    color: white;
+    padding: 10% 0px 10px 0px;
+    /* padding: 0px; */
+    margin: 0%;
+    height: 60px;
+}
+.side-header{
+    text-align: left;
+    color: grey;
+}
+ul{
+    padding-left: 15%;
+}
+a{
+    cursor: pointer;
+}
+li{
+    text-align: left;
+    font-size: small;
+}
+li:hover{
+    background-color: rgb(187, 174, 174);
+}
+
+.side-bottom{
+    background-color: rgb(38, 192, 166);
+    margin-bottom: 0px;
+    padding-bottom: 10px;
+}
+
+.side-bottom a{
+    color: white;
+}
+
+
+i{
+    color: white;
+    font-size: 30px;
+}
+
+a{
+    border-width: 100%;
+}
+
+
+.bars{
+    /* background-color:royalblue; */
+    width: 50px;
+    border-radius: 5px;
+    border-style: none;
+    color:white;
+    padding-left: 7%;
+}
+
+
+.search{
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+}

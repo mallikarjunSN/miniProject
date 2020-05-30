@@ -1,0 +1,170 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3 col-sm-3">
+            <mat-card style="padding-top: 0px;padding-bottom: 0px;">
+                <mat-card-title class="heading">Settings</mat-card-title>
+                <mat-card-content>
+                    <mat-list class="settings">
+                        <mat-list-item><button (click)="requestFlag=!requestFlag">Requests Sent <i *ngIf="requestFlag" class="fa fa-window-close"></i></button></mat-list-item>
+                        <mat-list-item><button (click)="currentFlag=!currentFlag">Current Renting <i *ngIf="currentFlag" class="fa fa-window-close"></i></button></mat-list-item>
+                        <mat-list-item><button (click)="wishlistFlag=!wishlistFlag">My wishlist<i *ngIf="wishlistFlag" class="fa fa-window-close"></i></button></mat-list-item>
+                        <mat-list-item><button (click)="historyFlag=!historyFlag">Renting History <i *ngIf="historyFlag" class="fa fa-window-close"></i></button></mat-list-item>
+                        <hr>
+                        <mat-list-item><button>My account Info</button></mat-list-item>
+                        <mat-list-item><a href="">logout</a> </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+
+        </div>
+        <div class="col-lg-9 col-sm-9">
+            <div class="row">
+                <div class="col-lg-12">
+                    <mat-card class="prop-menu">
+                        <mat-card-content>
+                            <div *ngIf="user.email==null || profileFlag">
+                                <span ><h2 class="heading">Please Complete and verify Your Profile First</h2> <a (click)="profileFlag=!profileFlag">click here</a></span>
+                                <div *ngIf="profileFlag">
+                                    <mat-card>
+                                        <mat-card-content class="complete">
+                                            <form (submit)="complete_profile(proform)" #proform="ngForm">
+                                                <mat-form-field>
+                                                    <mat-label>email address</mat-label>
+                                                    <input matInput type="email" name="email" ngModel required #email="ngModel">
+                                                    <mat-error *ngIf="email.touched && email.invalid">Enter proper email address</mat-error>
+                                                </mat-form-field>
+                                                <mat-form-field>
+                                                    <mat-label>Address</mat-label>
+                                                    <input matInput type="text" name="address" required ngModel #address="ngModel">
+                                                    <mat-error *ngIf="address.touched && address.invalid">Enter proper address</mat-error>
+                                                </mat-form-field>
+                                                <mat-form-field>
+                                                    <mat-label>Aadhar no</mat-label>
+                                                    <input matInput type="text" name="aadhar" minlength="16" maxlength="16" required ngModel #aadhar="ngModel">
+                                                    <!-- <mat-error *ngIf="email.touched && email.invalid">Enter proper email address</mat-error> -->
+                                                </mat-form-field>
+                                                <mat-form-field>
+                                                    <mat-label>phone no2 (optional)</mat-label>
+                                                    <input matInput type="text" name="phone2" ngModel #phone2="ngModel">
+                                                    <!-- <mat-error *ngIf="email.touched && email.invalid">Enter proper email address</mat-error> -->
+                                                </mat-form-field>
+                                                <button style="margin: 5px;" class="btn btn-primary" *ngIf="proform.valid " type="submit">SUBMIT</button>
+                                            </form>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </div>
+                                <hr>
+                            </div>
+                            <div *ngIf="requestFlag">
+                                <i (click)="requestFlag=!requestFlag" class="fa fa-window-close"></i>
+                                <h2 class="heading">Requests sent</h2>
+                                <table>
+                                    <tr>
+                                        <th colspan="2">House</th>
+                                        <th rowspan="2">Owner Name</th>
+                                        <th colspan="2">Request sent on</th>
+
+                                    </tr>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Name</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                    </tr>
+                                    <tr *ngFor="let i of sent_requests">
+                                        <td>{{i.houseno}}</td>
+                                        <td>{{i.name}}</td>
+                                        <td>{{i.ownername}}</td>
+                                       <td>{{i.date | date:'dd-MMM-yyyy':'+0530'}}</td>
+                                        <td>{{i.date | date:'h:mm:ss a':'0530'}}</td>
+                                    </tr>
+                                </table>
+                                <hr>
+                            </div>
+                            <div *ngIf="currentFlag">
+                                <i (click)="currentFlag=!currentFlag" class="fa fa-window-close"></i>
+                                <h2 class="heading">Currently Renting house</h2>
+                                <h5 class="heading">You are currently Renting</h5>
+                                <div *ngIf="current_rent!=null">
+                                    <table class="hist-table">
+                                        <tr>
+                                            <th colspan="2">Property</th>
+                                            <th colspan="1" rowspan="2">Owner Name</th>
+                                            <th colspan="1" rowspan="2">Rent Start Date</th>
+                                        </tr>
+                                        <tr>
+                                            <th>House No</th>
+                                            <th>House Name</th>
+                                        </tr>
+                                        <tr> 
+                                            <td>{{current_rent.houseno}}</td>
+                                            <td>{{current_rent.name}}</td>
+                                            <td>{{current_rent.owner_name}}</td>
+                                            <td>{{current_rent.rent_start_date | date:'dd-MMM-yyyy'}}</td>
+                                        </tr>
+                                    </table>
+                                    <button class="btn btn-danger" (click)="endCurrentRent()">End Renting this house</button>
+                                </div>
+                                <div *ngIf="current_rent==null">
+                                    Currently You are not renting any house
+                                </div>
+                                <hr>
+                            </div>
+                            <div *ngIf="wishlistFlag">
+                                <i (click)="wishlistFlag=!wishlistFlag" class="fa fa-window-close"></i>
+                                <h2 class="heading">My Wishlist</h2>
+                                <hr>
+                                <table class="hist-table">
+                                    <tr>
+                                        <th colspan="2">Property</th>
+                                        <th colspan="1" rowspan="2">Action</th>
+                                    </tr>
+                                    <tr>
+                                        <th>House No</th>
+                                        <th>House Name</th>
+                                    </tr>
+                                    <tr *ngFor="let i of wishlist"> 
+                                        <td>{{i.houseno}}</td>
+                                        <td>{{i.name}}</td>
+                                        <td> <button mat-raised-button class="btn btn-danger" (click)="removeFromWishlist(i)">remove <i class="fa fa-bin"></i></button></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div *ngIf="historyFlag">
+                                <i (click)="historyFlag=!historyFlag" class="fa fa-window-close"></i>
+                                <h2 class="heading">Renting history</h2>
+                                <table class="hist-table">
+                                    <tr>
+                                        <th colspan="2">Property</th>
+                                        <th colspan="1" rowspan="2">Owner name</th>
+                                        <th colspan="2">Duration</th>
+                                    </tr>
+                                    <tr>
+                                        <th>House No</th>
+                                        <th>House Name</th>
+                                        <th>From</th>
+                                        <th>to</th>
+                                    </tr>
+                                    <tr *ngFor="let i of history">
+                                        <td>{{i.houseno}}</td>
+                                        <td>{{i.name}}</td>
+                                        <td>{{i.owner_name}}</td>
+                                        <td>{{i.rent_start_date | date:'dd-MMM-yyyy'}}</td>
+                                        <td>{{i.rent_end_date | date:'dd-MMM-yyyy'}}</td>
+                                    </tr>
+                                </table>
+                                <hr>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                    <app-account></app-account>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

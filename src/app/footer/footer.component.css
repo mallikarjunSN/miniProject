@@ -1,0 +1,50 @@
+.container-fluid{
+    width: 100%;
+    height:auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    /* position: absolute; */
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+a{
+    cursor: pointer;
+}
+
+/* ul{
+    padding-left: 0px;
+} */
+
+h5,h3{
+    /* text-align: center; */
+    color: rgb(38, 192, 166);
+    font-weight: bold;
+}
+
+li>a{
+    color: white;
+    font-size: medium;
+    text-align: left;
+}
+
+.row{
+    margin-bottom: 0px;
+}
+
+a,span,i{
+    color:royalblue;
+    text-align: center;
+    align-items: center;
+    font-size: 25px;
+    margin-top: 10px;
+}
+p,h1,h3{
+    text-align: center;
+    color: white;
+}
+i{
+    text-align: center;
+    font-weight: bold;
+}

@@ -1,0 +1,47 @@
+.navbar{
+    justify-content: space-between;
+}
+
+a{
+    padding-right: 1rem;
+    color: white;
+}
+
+
+.example-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #eee;
+  }
+
+  mat-sidenav-container{
+      height: 100%;
+  }
+  mat-sidenav{
+      height: auto;
+  }
+  mat-sidenav,mat-sidenav-content{
+      padding: 16px;
+
+  }
+
+  mat-sidenav-content{
+      height: 20%;
+  }
+
+
+  mat-sidenav{
+      background-color: royalblue;
+      width: 200px;
+  }
+
+  a{
+      color:white;
+  }
+
+.cont{
+    border-style: dotted;
+}

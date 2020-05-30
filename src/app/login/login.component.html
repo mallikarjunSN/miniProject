@@ -1,0 +1,49 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div>
+                <mat-card class="card">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <mat-card-title class="heading">Login</mat-card-title>
+                            <mat-error>{{message}}</mat-error>
+                            <form (submit)="submit(loginForm)" #loginForm="ngForm">
+                             
+                            <mat-form-field>
+                                <mat-label> <i class="fa fa-phone"></i> Phone no</mat-label>
+                                <input matInput type="text" maxlength="10" minlength="10" name="phone" ngModel required #phone="ngModel">
+                            </mat-form-field>
+                            <br><mat-error *ngIf="phone.invalid && phone.touched"> phone no 10 characters</mat-error>
+                    
+                            
+                            <mat-form-field>
+                                <mat-label><i class="fa fa-key"></i>Password</mat-label>
+                            <input matInput type="password" placeholder="" name="password" id="password" ngModel required #password="ngModel">  
+                                <br>
+                                <mat-error *ngIf="password.invalid && password.touched"> password cannot be empty</mat-error>                             
+                            </mat-form-field><br>
+                            <div>
+                                <button mat-raised-button class="btn btn-warning" type="reset">RESET</button>
+                                <button mat-raised-button class="btn btn-primary" type="submit">SUBMIT</button>
+                                <br>
+                                <span style="font-size: small;">Don't have an account??</span><a routerLink="/signup" (click)="onNoClick()">Create account</a>
+                                <br>
+                                <a (click)="onNoClick()" routerLink="/forgot">Forgot Password</a>                                                   
+                            </div>
+                            
+                        </form>
+                        </div>
+                        <!-- <div class="col-lg-5 canv">
+                            <img src="../../assets/cities/assembly-vidhana-soudha-heritage-architecture-structure-building-india-319d049da570d678-512.png" alt="hbffsbsk">
+                        </div> -->
+                    </div>
+
+
+                </mat-card>
+                
+            </div>
+        </div>
+    </div>
+    
+</div>

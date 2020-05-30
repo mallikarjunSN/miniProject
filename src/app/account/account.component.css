@@ -1,0 +1,68 @@
+.container{
+    height: 500px;
+    margin-bottom: 0px;
+}
+
+
+.complete mat-form-field{
+    width: 30%;
+    align-items: center;
+    margin: 5px;
+    font-size: large;
+    text-align: center;
+}
+
+.heading{
+    color: rgb(38, 192, 166);
+    font-weight: bold;
+    text-align: center;
+}
+
+.fa-wifi:hover{
+    visibility: visible;
+}
+
+table{
+    align-items: center;
+    width: 100%;
+}
+
+mat-list-item{
+    padding-bottom: 2%;
+    margin-bottom: 2%;
+    text-align: left;
+}
+
+.action{
+    border: 1px double royalblue;
+    border-radius: 5px;
+    background-color: rgb(194, 170, 170);
+    text-align: center;
+    margin-top: 5px;
+    padding: 10px;
+}
+
+.action button{
+    font-size: small;
+    /* margin: 10%; */
+    margin-left: 0px;
+}
+
+.fa-window-close{
+    font-size: large;
+    color: rgb(38, 192, 166);
+    margin: 5%;
+}
+
+.NEW{
+    font-weight: bold;
+}
+.new-icon{
+    background-color: rgb(206, 36, 36);
+    border-radius: 100%;
+    color: white;
+    font-size: x-small;
+    font-weight: lighter;
+    margin: 5px;
+    padding: 4px;
+}

@@ -1,0 +1,59 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Payment</h1>
+            <h3>amount <i class="fa fa-bin"></i> : Rs.{{prop.rent_amt}}/-</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <form (submit)="confirmRent(payForm)" #payForm="ngForm">
+                <mat-form-field>
+                    <mat-label>Select payment method</mat-label>
+                    <mat-select name="method" ngModel #method="ngModel">
+                        <mat-option value="upi">UPI</mat-option>
+                        <mat-option value="card">Debit Card/Credit Card</mat-option>
+                        <!-- <mat-option value="online">Net Banking</mat-option> -->
+                    </mat-select>
+                </mat-form-field>
+
+                <div *ngIf="method.touched && method.value=='upi'">
+                    <mat-form-field>
+                        <mat-label>UPI id</mat-label>
+                        <input matInput type="text" name="upi-id" minlength="10" maxlength="20"  ngModel required #upi_id="ngModel">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>UPI PIN</mat-label>
+                        <input matInput type="password" name="upi-pin" minlength="4" maxlength="6"  ngModel required #upi_pin="ngModel">
+                    </mat-form-field>
+                    <mat-error *ngIf="upi_id.touched && upi_pin.touched && upi_id.invalid && upi_pin.invalid">Enter proper UPI id and PIN</mat-error>
+
+                </div>
+                <div *ngIf="method.touched && method.value=='card'">
+                    <mat-form-field>
+                        <mat-label>Enter debit/credit card no</mat-label>
+                        <input matInput type="text" name="card_no" minlength="16" maxlength="16" required ngModel #card_no="ngModel">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Validity/Expiry Date</mat-label>
+                        <input matInput type="month" name="upi-pin" required ngModel #exp_date="ngModel">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>CVV</mat-label>
+                        <input matInput type="password" minlength="3" maxlength="3" name="cvv" required ngModel #cvv="ngModel">
+                    </mat-form-field>
+                    <mat-error *ngIf="card_no.invalid && exp_date.invalid && cvv.invalid && card_no.touched && exp_date.touched && cvv.touched">Enter proper card credentials</mat-error>
+
+                </div>
+                <br>
+
+                <button class="btn btn-warning" type="submit">Submit</button>
+                <button class="btn btn-primary" type="reset">Clear</button>
+            </form>
+        </div>
+        <div class="col-lg-2"></div>
+
+    </div>
+</div>

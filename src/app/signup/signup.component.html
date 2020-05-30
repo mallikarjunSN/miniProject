@@ -1,0 +1,99 @@
+<!-- <div>
+    <p style="font-family: fantasy;color: greenyellow;font-size: 300%;float: left;">RoomNodi.com</p><p style="font-family: fantasy;color: greenyellow;font-size: 300%;float: right;">signin</p><br>
+</div> -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="accForm">
+                <div class="prac">
+                <p style="text-align:center;font-size: 200%;"><strong style="color: rgb(38, 192, 166);"> Create account</strong></p>
+
+                    <form (submit)="submit(signupform)" #signupform="ngForm">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input name="firstName" ngModel required  placeholder="first name" 
+                                    #firstName="ngModel"  
+                                    type="text" 
+                                    class="form-control">
+                                <div class="alert alert-danger" *ngIf="!firstName.valid && firstName.touched">
+                                        firstName required!!!!
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="last name">last Name</label>
+                            <input name="lastName" placeholder="last name" 
+                                type="text"
+                                ngModel  
+                                #lastName="ngModel"
+                                class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input name="phone" 
+                                minlength="10" 
+                                maxlength="10" 
+                                type="text"
+                                placeholder="phone no"
+                                ngModel 
+                                required
+                                #phone="ngModel"
+                                class="form-control">
+                                <div class="alert alert-danger" *ngIf="!phone.valid && phone.touched">
+                                        <div *ngIf="phone.errors.required">Phone number required</div>
+                                        <div *ngIf="phone.errors.minlength">ph number should be of lenght 10</div>
+                                </div>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="usertype">Select User type</label><br>
+                            <select name="usertype" class="form-control" ngModel  #usertype="ngModel">
+                                <option value="renter">Room Seeker/ Renter</option>
+                                <option value="owner">Room Owner</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Set Password</label>
+                            <input type="password"
+                                ngModel
+                                name="password"
+                                required
+                                minlength="8"
+                                maxlength="16"
+                                #password="ngModel"
+                                class="form-control">
+                                <div class="alert alert-danger" *ngIf="!password.valid && password.touched">
+                                    <div *ngIf="password.errors.required">password required</div>
+                                    <div *ngIf="password.errors.minlength">password not strong enough</div>
+                                </div>
+                                
+                                <label for="cpassword">Confirm Password</label>
+                                <input type="password"
+                                ngModel
+                                name="cpassword"
+                                required
+                                minlength="8"
+                                maxlength="16"
+                                #cpassword="ngModel"
+                                class="form-control">
+                                <div class="alert alert-danger" *ngIf="!cpassword.valid && cpassword.touched">
+                                    <div *ngIf="cpassword.errors.required">please confirm password </div>
+                                    <div *ngIf="cpassword.errors.minlength">password not strong enough</div>
+                                </div>
+                        </div>
+            
+                        <mat-error>{{signError}}</mat-error>
+                        <button mat-raised-button class="btn btn-warning" type="reset" >Reset</button>
+                        <button mat-raised-button class="btn btn-primary" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <img src="../../assets/category/family.jpg" alt="">
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <p>  (click)="func(firstName.value,lastName.value,phNumber.value,password.value);" </p> -->

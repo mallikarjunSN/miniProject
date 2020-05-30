@@ -1,0 +1,24 @@
+<div class="container" style="margin: 5%;">     
+    <!-- <div *ngIf="!fullscreen">
+        <form (submit)="submit(formm)" #formm="ngForm">
+
+            <mat-form-field>
+                <mat-label>demo</mat-label>
+                <input matInput type="text" name="demo" [value]=data.id ngModel #demo="ngModel">
+            </mat-form-field>
+            <button type="submit">submit</button>
+        </form>
+
+        <img (click)="fullscreen=!fullscreen" src="../../assets/offers/offer_.jpg" alt="">
+    </div>
+    <div *ngIf="fullscreen">
+        <i (click)="fullscreen=!fullscreen" style="float: right;" class="fa fa-window-close"></i>
+        <img (click)="fullscreen=!fullscreen" class="fullscreen" src="../../assets/offers/offer_.jpg" alt="">
+    </div> -->
+
+    <button (click)="getdatetime()">get date and time</button>
+
+    <br>
+    <span>date" {{d | date:'dd-MMM-yyyy':'+0530'}}</span><br>
+    <span>time: {{d | date:'h:mm:ss a'}}</span>
+</div>

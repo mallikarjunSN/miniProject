@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  
+  <div class="row bar">
+    <div class="col-lg-4  col-md-4  col-sm-4 ">
+      <mat-form-field>
+        <mat-label> Sort By<i class="fa fa-sort"></i></mat-label>
+            <mat-select name="usertype"  ngModel  #usertype="ngModel">
+                <mat-option (click)="sort('rent_amt')" value="rent_amt">Rent Price</mat-option>
+                <mat-option (click)="sort('houseno')" value="houseno">House No</mat-option>
+                <mat-option (click)="sort('name')" value="name">House Name</mat-option>
+                <mat-option (click)="sort('bhk')" value="bhk">BHK</mat-option>
+            </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-lg-4  col-md-4  col-sm-4 ">
+      <button mat-raised-button class="asc-btn" (click)="reverse()"><span> ASC-DESC <i class="fa fa-sort"></i> </span></button>
+    </div>
+    <div class="col-lg-4  col-md-4  col-sm-4 "></div>
+  </div>
+
+  <div *ngIf="length==0">
+    <div class="row">
+      <div  class="col-lg-12 col-md-12 col-sm-12">
+        <mat-card style="height: 100%;">
+          <mat-card-content>
+            <mat-error>Sorry No results found for entered keyword...!!</mat-error>   
+
+          </mat-card-content>
+        </mat-card>
+        <!-- <span>Sorry No results found for entered keyword...!!</span>    -->
+      </div>
+    </div>
+  </div>
+  <div *ngIf="length!=0">
+    <div class="row" style="margin-bottom: 4%;" *ngFor="let i of properties">
+      <div  class="col-lg-4 col-md-4 col-sm-4">
+        <mat-card (click)="viewProp(i)">
+          <mat-card-title>{{i.name}}</mat-card-title>
+          <mat-card-content>
+            <img class="search-img" src="../../assets/house/9632200719/23/pic0.jpg" alt="search-image">
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div  class="col-lg-8 col-md-8 col-sm-8">
+        <mat-card>
+          <mat-card-content>
+            <mat-grid-list class="prop-info" cols=2 rowHeight="27:4">
+              <mat-grid-tile>{{i.suitable}}</mat-grid-tile>
+              <mat-grid-tile>{{i.bhk}}</mat-grid-tile>
+              <mat-grid-tile>Address{{i.houseno}} {{i.street}} </mat-grid-tile>
+              <mat-grid-tile> {{i.landmark}}  {{i.city}}</mat-grid-tile>
+              <mat-grid-tile> {{i.state}}, pin-{{i.pin}}  </mat-grid-tile>
+              <mat-grid-tile>Monthly Rent: Rs.{{i.rent_amt}} </mat-grid-tile>
+              <mat-grid-tile>Pricing:Negotiable</mat-grid-tile>
+              <mat-grid-tile>{{i.more}}</mat-grid-tile>
+            </mat-grid-list>
+  
+            <mat-grid-list cols=2 rowHeight="14:2">
+              <mat-grid-tile><button mat-raised-button>Get Owner Info <i style="color: royalblue;" class="fa fa-user"></i></button> </mat-grid-tile>
+              <mat-grid-tile> <button (click)="viewProp(i)" mat-raised-button> More Info on house <i style="color: gold;" class="fa fa-home"></i> </button></mat-grid-tile>
+              <!-- <mat-grid-tile><button mat-raised-button> Add to wishlist <i style="color: red;" class="fas fa-heart"></i></button></mat-grid-tile> -->
+            </mat-grid-list>
+          </mat-card-content>
+        </mat-card>
+  
+      </div>
+    </div>
+
+  </div>
+</div>
