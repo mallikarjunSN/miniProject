@@ -1,0 +1,336 @@
+select s.name,s.usn,a.sid,a.fac_id 
+from student s,academics a,subject c
+where s.usn=a.usn and a.sid=c.sid 
+and fac_id not in (select f.fac_id from faculty f where f.dept=s.dept);
+
+
+
+create table demo(
+usn char(10),A
+name varchar(30),
+primary key(usn),
+foreign key(usn) references student(usn) on delete cascade on update cascade);
+,
+foreign key(name) references student(NAME) on delete cascade on update cascade);
+
+create table users(
+firstName varchar(30) NOT NULL,
+lastName varchar(30),
+phone char(10) ,
+usertype varchar(10),
+password varchar(20),
+constraint users_pk1 primary key(phone));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create table messages( 
+username varchar(30), 
+message varchar(30), 
+status varchar(5), 
+foreign key(username) references account(username)); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE DEMO( 
+CODE NUMERIC(2),
+DEPT CHAR(3),
+PRIMARY KEY(CODE),
+CONSTRAINT FK1 FOREIGN KEY(DEPT) REFERENCES DEPARTMENT (DEPT_ID) ON UPDATE CASCADE ON DELETE SET NULL);           
+
+
+/**************** 6th sem dbms lasb activity commands ***********/     
+
+
+CREATE TABLE STUDENT(
+USN CHAR(10) NOT NULL DEFAULT '19SI012345',
+NAME VARCHAR(40) NOT NULL,
+SEM NUMERIC(1) NOT NULL,
+DEPT CHAR(3),
+CGPA NUMERIC(3,2),
+DOB DATE NOT NULL,
+PHONE_NO NUMERIC(10) UNIQUE,
+EMAIL VARCHAR(30) UNIQUE,
+BLD_GRP VARCHAR(3),
+CONSTRAINT STUDENT_PK1 PRIMARY KEY(USN),
+CONSTRAINT STUDENT_CHK1 CHECK((SEM>0) AND (SEM<=8)),
+CONSTRAINT STUDENT_CHK2 CHECK((CGPA>=0) AND (CGPA<=10)));
+
+ALTER TABLE STUDENT ADD CONSTRAINT STUDENT_FK1 FOREIGN KEY(DEPT) REFERENCES DEPARTMENT(DEPT_ID) ON DELETE SET NULL ON UPDATE CASCADE;
+
+
+CREATE TABLE FACULTY(
+FAC_ID CHAR(5) NOT NULL,
+NAME VARCHAR(40) NOT NULL,
+DEPT CHAR(3),
+AREA_OF_INTEREST VARCHAR(30) ,
+DESIGNATION VARCHAR(20),
+DOB DATE NOT NULL,
+PHONE_NO NUMERIC(10) UNIQUE NOT NULL,
+EMAIL VARCHAR(30) UNIQUE NOT NULL,
+ADDRESS VARCHAR(40) NOT NULL,
+BLOOD_GROUP VARCHAR(3),
+CONSTRAINT FACULTY_PK1 PRIMARY KEY(FAC_ID));
+
+ALTER TABLE FACULTY ADD CONSTRAINT FACULTY_FK1 FOREIGN KEY(DEPT) REFERENCES DEPARTMENT(DEPT_ID) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE FACULTY ADD CONSTRAINT FACULTY_FK2 FOREIGN KEY(DHOD_FID) REFERENCES FACULTY(FAC_ID) ON DELETE SET NULL ON UPDATE CASCADE;
+
+UPDATE FACULTY SET 
+
+
+
+
+CREATE TABLE ENROLL(
+USN CHAR(10),
+SID VARCHAR(6),
+CIE NUMERIC(2),
+SEE_MARKS NUMERIC(2),
+MARKS1 NUMERIC(2),
+MARKS2 NUMERIC(2),
+ATTENDANCE NUMERIC(5,2) DEFAULT 0.0,
+ELIGIBLE CHAR(1),
+GRADE CHAR(2),
+CONSTRAINT ENROLL_PK1 PRIMARY KEY(USN,SID),
+CONSTRAINT ENROLL_FK1 FOREIGN KEY(USN) REFERENCES STUDENT(USN) ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT ENROLL_FK2 FOREIGN KEY(SID) REFERENCES SUBJECT(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT ENROLL_CHK2 CHECK((CIE>=0) AND (CIE<=50)),
+CONSTRAINT ENROLL_CHK3 CHECK((SEE_MARKS>=0)AND (SEE_MARKS<=50)),
+CONSTRAINT ENROLL_CHK4 CHECK((MARKS1>=0) AND (MARKS1<=50)),
+CONSTRAINT ENROLL_CHK5 CHECK((MARKS2>=0) AND (MARKS2<=50)),
+CONSTRAINT ENROLL_CHK6 CHECK((ATTENDANCE>=0) AND (ATTENDANCE<=100)));
+
+
+
+
+
+
+
+
+
+
+CREATE OR REPLACE TRIGGER DEMO_TRIGGER
+BEFORE INSERT on student
+FOR EACH ROW 
+WHEN (STUDENT.CGPA<0)
+BEGIN
+	dbms_output.put_line('CGPA CANNOT BE NEGATIVE');
+END; 
+
+
+DELIMITER $$
+
+CREATE TRIGGER ENROLL_TRIGGER
+BEFORE INSERT ON ENROLL 
+FOR EACH ROW BEGIN
+	SELECT SUM(CREDITS) into @tc
+	FROM subject S,ENROLL E
+	WHERE E.USN=new.usn AND E.SID=S.SID;
+    
+    select credits into @c 
+    from subject S
+    where NEW.SID=S.SID;
+    
+    
+    IF ( @tc+@c > 16 ) THEN 
+        SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = 'Warning: cannot enroll for more than 16 credits';
+    END IF;
+END$$
+
+DELIMITER ;
+
+
+DELIMITER //
+
+
+CREATE TRIGGER FACULTY_THEORY_TRIGGER
+BEFORE INSERT ON FACULTY_TEACHES_SUBJECT
+FOR EACH ROW BEGIN
+	SELECT COUNT(*) AS @N
+	FROM FACULTY_TEACHES_SUBJECT FS,SUBJECT S
+	WHERE NEW.FAC_ID=FS.FAC_ID AND FS.SID=S.SID AND S.SUB_TYPE='THEORY';
+
+	IF(@N>2) THEN 
+		SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = 'A FACULTY CANNOT TEACH MORE THAN 2 THEORY SUBJECTS';
+	END IF;
+END //
+
+DELIMITER;
+
+
+CREATE TABLE FACULTY_TEACHES_SUBJECT(
+FAC_ID CHAR(5) NOT NULL,
+SID VARCHAR(6) NOT NULL,
+CONSTRAINT FACULTY_SUBJECT_PK1 PRIMARY KEY(FAC_ID,SID),
+CONSTRAINT FACULTY_SUBJECT_FK1 FOREIGN KEY(FAC_ID) REFERENCES FACULTY(FAC_ID) ON DELETE CASCADE ON UPDATE CASCADE, 
+CONSTRAINT FACULTY_SUBJECT_FK2 FOREIGN KEY(SID) REFERENCES SUBJECT(SID) ON DELETE CASCADE ON UPDATE CASCADE);
+ 
+
+
+CREATE TABLE DEPT_HOD(
+HOD CHAR(5) NOT NULL,
+DEPT CHAR(3) NOT NULL,
+HOD_START_DATE DATE,
+CONSTRAINT DEPT_HOD_PK1 PRIMARY KEY(HOD,DEPT),
+CONSTRAINT DEPT_HOD_FK1 FOREIGN KEY(HOD) REFERENCES FACULTY(FAC_ID) ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT DEPT_HOD_FK2 FOREIGN KEY(DEPT) REFERENCES DEPARTMENT(DEPT_ID) ON DELETE CASCADE ON UPDATE CASCADE);
+
+
+CREATE TABLE FACULTY_DEPT(
+FAC_ID CHAR(5) NOT NULL,
+DEPT CHAR(3) NOT NULL,
+CONSTRAINT FACULTY_DEPT_PK1 PRIMARY KEY(FAC_ID,DEPT),
+CONSTRAINT FACULTY_DEPT_FK1 FOREIGN KEY(FAC_ID) REFERENCES FACULTY(FAC_ID) ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT FACULTY_DEPT_FK2 FOREIGN KEY(DEPT) REFERENCES DEPARTMENT(DEPT_ID) ON DELETE CASCADE ON UPDATE CASCADE);
+
+
+
+create tABLE temp(
+id int(3),
+image blob not null);
+
+
+
+
+
+UPDATE FACULTY SET DHOD_FID='BT458' WHERE DEPT='BTE';
+UPDATE FACULTY SET DHOD_FID='CH035' WHERE DEPT='CHE';
+UPDATE FACULTY SET DHOD_FID='CS235' WHERE DEPT='CSE';
+UPDATE FACULTY SET DHOD_FID='CV450' WHERE DEPT='CVE';
+UPDATE FACULTY SET DHOD_FID='EC052' WHERE DEPT='ECE';
+UPDATE FACULTY SET DHOD_FID='EE135' WHERE DEPT='EEE';
+UPDATE FACULTY SET DHOD_FID='IS023' WHERE DEPT='ISE';
+UPDATE FACULTY SET DHOD_FID='MAT23' WHERE DEPT='MAT';
+UPDATE FACULTY SET DHOD_FID='ME005' WHERE DEPT='MEC';
+UPDATE FACULTY SET DHOD_FID='TC075' WHERE DEPT='TCE';
+
+
+UPDATE FACULTY set DOB='1993-04-23',BLOOD_GROUP='AB+' WHERE FAC_ID LIKE '___2_';
+UPDATE FACULTY set DOB='1986-07-23',BLOOD_GROUP='A+' WHERE FAC_ID LIKE '___3_';
+UPDATE FACULTY set DOB='1987-10-23',BLOOD_GROUP='B-' WHERE FAC_ID LIKE '___4_';
+UPDATE FACULTY set DOB='1995-08-02',BLOOD_GROUP='B+' WHERE FAC_ID LIKE '___5_';
+UPDATE FACULTY set DOB='1975-02-23',BLOOD_GROUP='AB+' WHERE FAC_ID LIKE '___6_';
+UPDATE FACULTY set DOB='1975-01-03',BLOOD_GROUP='A-' WHERE FAC_ID LIKE '___7_';
+UPDATE FACULTY set DOB='1980-05-23',BLOOD_GROUP='O+' WHERE FAC_ID LIKE '___8_';
+UPDATE FACULTY set DOB='1990-12-23',BLOOD_GROUP='O-' WHERE FAC_ID LIKE '___9_';
+UPDATE FACULTY set DOB='1982-07-23',BLOOD_GROUP='B+' WHERE FAC_ID LIKE '___0_';
+
+
+ALTER TABLE FACULTY MODIFY PHONE_NO CHAR(10) UNIQUE;
+
+
+update faculty set phone_no='9071306366',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='bt213';
+update faculty set phone_no='9071306367',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='bt458';
+update faculty set phone_no='9071306368',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='ch035';
+update faculty set phone_no='9071306369',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='ch265';
+update faculty set phone_no='9071306370',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='ch480';
+update faculty set phone_no='9071306371',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='cs218';
+update faculty set phone_no='9071306372',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='cs230';
+update faculty set phone_no='9071306373',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='cs235';
+update faculty set phone_no='9071306374',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='cs326';
+update faculty set phone_no='9071306375',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='cs703';
+update faculty set phone_no='9071306376',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='cs780';
+update faculty set phone_no='9071306377',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='cv126';
+update faculty set phone_no='9071306378',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='cv450';
+update faculty set phone_no='9071306378',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='ec052';
+update faculty set phone_no='9071306378',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='EC048';
+update faculty set phone_no='9071306378',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='EC458';
+update faculty set phone_no='9071306378',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='EE123';
+update faculty set phone_no='9071306378',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='EE135';
+update faculty set phone_no='9071306378',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='EE420';
+update faculty set phone_no='9071306378',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='IS023';
+update faculty set phone_no='9071306378',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='IS420';
+update faculty set phone_no='9071306378',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='IS452';
+
+update faculty set phone_no='9071306378',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='IS459';
+update faculty set phone_no='9071306378',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='MAT23';
+update faculty set phone_no='9071306378',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='ME005';
+update faculty set phone_no='9071306378',email='jeevanram@gmail.com',address='#24,kuvempu nagar bengaluru' where fac_id='TC075';
+
+
+
+
+insert into faculty_teaches_subject values('CS235',''
+
+
+
+
+//******************* STORED PROCEDURE ***********************//
+
+
+
+DELIMITER //
+CREATE PROCEDURE UPDATE_ENROLL()
+BEGIN 
+	DECLARE G VARCHAR(2);
+	DECLARE TOTAL DECIMAL(3,0);
+	DECLARE N DECIMAL(3,0);
+	DECLARE I INTEGER;
+	DECLARE U CHAR(10);
+
+	UPDATE ENROLL SET SEE=CEIL(SEE_MARKS/2);
+	UPDATE ENROLL SET CIE=CEIL((MARKS1+MARKS2)/2);
+	SELECT COUNT(*) INTO N FROM ENROLL;
+	
+	SET I=0;
+	
+	WHILE I<N DO
+	
+	SELECT USN,(CIE+SEE) INTO U,TOTAL FROM ENROLL LIMIT I,1;
+
+	IF(TOTAL>=90) THEN
+		SET G='S+';
+	ELSEIF(TOTAL>=80) THEN 
+		SET G='S';
+	ELSEIF(TOTAL>=70) THEN 
+		SET G='A';
+	ELSEIF(TOTAL>=60) THEN 
+		SET G='B';
+	ELSEIF(TOTAL>=70) THEN 
+		SET G='C';
+	ELSEIF(TOTAL>=80) THEN 
+		SET G='D';
+	ELSEIF(TOTAL<40) THEN 	
+		SET G='F';
+	END IF;
+
+	UPDATE ENROLL SET GRADE=G WHERE USN=U;
+	SET I=I+1;
+	END WHILE;
+
+END//
+
+
+
+	ELSEIF(TOTAL>=80) THEN G = 'S';
+	END IF;
+	
+	UPDATE ENROLL SET GRADE = G;
+
+
+
+
+
+

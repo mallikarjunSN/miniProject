@@ -1,0 +1,81 @@
+ my images table in mysql
+ id    | varchar(4) 
+ image | blob   
+
+
+ in angular   
+ 
+ 
+ img.component.html
+
+ <div class="container" style="margin: 5%;">
+    <div class="row">
+        <div class="col-lg-12">
+            <input
+            style="display: none"
+            type="file" (change)="onFileChanged($event)"
+            #fileInput>
+            <button (click)="fileInput.click()">Select File</button>
+            <button (click)="onUpload()">Upload!</button>
+        </div>
+    </div>
+</div> 
+
+
+img.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
+
+@Component({
+  selector: 'app-img',
+  templateUrl: './img.component.html',
+  styleUrls: ['./img.component.css']
+})
+export class ImgComponent implements OnInit {
+
+  constructor(private http:HttpClient) { }
+  ngOnInit() {
+  }
+
+  img:string;
+
+  selectedFile: File;
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile);
+  }
+
+  up:any;
+  onUpload() {
+    this.up={id:23,image:<File>this.selectedFile}
+    this.http.post("http://localhost:1025/demo/upload", uploadData)
+      .subscribe((responseData)=>{
+          console.log("responseData "+responseData);
+      });
+  }
+  
+}
+
+
+
+node.js backend code
+
+router.post("/upload",(req,res,next)=>{
+    
+    console.log(" images "+req.body.image.name); //this statement is posing error as "Cannot read property 'name' of undefined"
+    str:String;
+    str="insert into images values('1',"+req.body.image+");"; // thus error here also 
+    conn.query(str,function(error,result){
+        if(error){
+            console.log("error in query");
+        }else{
+            console.log("Success");
+            res.status(200).json({
+                status:"success",
+                data:result
+            });
+        }
+    })
+})
